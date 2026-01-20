@@ -69,6 +69,12 @@ p {
   justify-content: space-between;
 }
 
+/* NAVBAR */
+
+.navbar > ul {
+  list-style: none;
+}
+
 /* SEARCH BAR */
 .search-bar {
   position: absolute;
