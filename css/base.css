@@ -11,6 +11,14 @@ body {
   padding: 0;
 }
 
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+
 /* ======= GLOBAL VARIABLES ======= */
 :root {
   /* FONT SIZES */
@@ -29,4 +37,64 @@ body {
   --text: #ffffff;
   --warning-text: #787878;
   --movie-text: #a5a5a5;
+
+  /* SIZES */
+  --input-height: 38px;
+  --br: 6px;
+}
+
+/* ======= GLOBAL STYLING ======= */
+.wrapper {
+  width: 60%;
+  margin: 0 auto;
+}
+
+/* HERO SECTION */
+
+.hero {
+  position: relative;
+  border: 2px solid red;
+  height: 20vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-content {
+  margin-top: auto;
+  margin-bottom: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* SEARCH BAR */
+.search-bar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, 50%);
+
+  display: flex;
+  height: var(--input-height);
+}
+
+.search-bar > input {
+  flex: 1 1 80%;
+
+  border-radius: var(--br) 0 0 var(--br);
+}
+
+.search-bar > button {
+  flex: 1 1 20%;
+  border-radius: 0 var(--br) var(--br) 0;
+}
+
+/* MAIN */
+main {
+  height: 80vh;
+  border: 2px solid orange;
+  background-color: var(--bg);
 }
