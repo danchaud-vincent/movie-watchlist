@@ -50,14 +50,16 @@ p {
 }
 
 /* HERO SECTION */
-
 .hero {
   position: relative;
   border: 2px solid red;
-  height: 20vh;
+  height: 30vh;
 
   display: flex;
   flex-direction: column;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .hero-content {
@@ -70,7 +72,6 @@ p {
 }
 
 /* NAVBAR */
-
 .navbar > ul {
   list-style: none;
 }
