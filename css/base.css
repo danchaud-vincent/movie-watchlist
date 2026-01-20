@@ -1,0 +1,32 @@
+/* ======= RESET ======= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* ======= GLOBAL VARIABLES ======= */
+:root {
+  /* FONT SIZES */
+  --fs-xs: 0.75rem; /*12px*/
+  --fs-s: 1rem; /*16px*/
+  --fs-m: 1.5rem; /*24px*/
+  --fs-l: 2.75rem; /*44px*/
+  --fs-title-small: 2rem; /*32px*/
+  --fs-title: 2.5rem; /*40px*/
+
+  /* COLORS */
+  --bg: #121212;
+  --bg-input: #2e2e2f;
+  --bg-icon: #2e2e2f;
+  --bg-search: #4b4b4b;
+  --text: #ffffff;
+  --warning-text: #787878;
+  --movie-text: #a5a5a5;
+}
