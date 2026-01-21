@@ -58,7 +58,7 @@ p {
   margin: 0 auto;
 }
 
-/* HERO SECTION */
+/* HERO */
 .hero {
   position: relative;
   height: var(--height-header);
@@ -66,6 +66,7 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -75,8 +76,9 @@ p {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
   z-index: 1;
+
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .hero > * {
@@ -96,6 +98,7 @@ p {
 /* NAVBAR */
 .navbar > ul {
   list-style-type: none;
+
   padding: 0;
   margin: 0;
 }
@@ -117,6 +120,7 @@ p {
   left: 50%;
   z-index: 1;
   transform: translate(-50%, 50%);
+
   display: flex;
   flex-wrap: wrap;
 }
@@ -124,31 +128,37 @@ p {
 .search-bar > * {
   max-width: 100%;
   height: var(--input-height);
+
+  font-weight: 500;
+  font-size: var(--fs-s);
+
   border: none;
 }
 
 .search-bar > input {
   flex: 1 1 100%;
-  border-radius: var(--br) var(--br) 0 0;
+  padding-left: 40px;
+
   background-image: url('/assets/images/search-icon.png');
   background-repeat: no-repeat;
   background-position: top 50% left 10px;
   background-color: var(--bg-input);
-  padding-left: 40px;
+  border-radius: var(--br) var(--br) 0 0;
 
   color: var(--input-text);
 }
 
 .search-bar > button {
   flex: 1 1 100%;
-  border-radius: 0 0 var(--br) var(--br);
-  background-color: var(--bg-search);
+
   color: var(--text);
+  background-color: var(--bg-search);
+  border-radius: 0 0 var(--br) var(--br);
 }
 
 .search-bar > button:hover {
-  background-color: var(--bg-light);
   color: var(--text-dark);
+  background-color: var(--bg-light);
 }
 
 /* MAIN */
@@ -157,7 +167,7 @@ main {
   background-color: var(--bg);
 }
 
-/* MOVIES */
+/* MOVIE CONTAINER */
 .movies-container {
   padding-top: 2em;
 }
@@ -166,6 +176,7 @@ main {
   display: flex;
   flex-direction: column;
   padding: 2em 0;
+
   border-bottom: var(--border-size) solid var(--border);
 }
 
@@ -192,32 +203,19 @@ main {
   gap: 1em;
 }
 
-.movie-description > p {
-  color: var(--text);
-}
-
 .movie-plot {
   color: var(--movie-text);
 }
 
 .genre {
-  color: var(--text);
   padding: 0.5em;
+  color: var(--text);
+  font-weight: 400;
+  font-size: var(--fs-xs);
   border: 1px solid var(--bg-light);
 }
 
-.no-shrink {
-  flex-shrink: 0;
-}
-
-/* ======= BUTTON ======= */
-button {
-  cursor: pointer;
-}
-
 .readmore-btn {
-  background: none;
-  border: none;
   color: var(--text);
   font-weight: 600;
 }
@@ -228,19 +226,38 @@ button {
 
 .watchlist-btn {
   align-self: center;
-  background: none;
-  border: 2px solid var(--bg-light);
-  border-radius: 25px;
   padding: 0.75em;
+
   color: var(--text);
+  border-radius: 25px;
+  border: 2px solid var(--bg-light);
 }
 
 .watchlist-btn:hover {
-  background-color: var(--bg-light);
   color: var(--text-dark);
+  background-color: var(--bg-light);
 }
 
-/* ======= FONTS ======= */
+.no-shrink {
+  flex-shrink: 0;
+}
+
+/*  BUTTON  */
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/*  COLORS  */
+h1,
+h2,
+a,
+p {
+  color: var(--text);
+}
+
+/*  FONTS  */
 body {
   font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
@@ -251,29 +268,12 @@ button {
   font-family: inherit;
 }
 
-h1,
-h2,
-a {
-  color: var(--text);
-}
-
-.search-bar > * {
-  font-weight: 500;
-  font-size: var(--fs-s);
-}
-
 .movie-header > h2 {
   font-weight: 800;
 }
 
 .movie-description > p {
   font-weight: 400;
-  color: var(--text);
-}
-
-.genre {
-  font-weight: 400;
-  font-size: var(--fs-xs);
 }
 
 /* ===== MEDIA QUERIES ==== */
