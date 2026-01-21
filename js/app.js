@@ -65,7 +65,6 @@ function renderMovies(movies) {
     </div>
     `;
   });
-  console.log(html);
 
   document.getElementById('movies').innerHTML = html;
 }
@@ -79,4 +78,44 @@ async function handleMovieSearch(e) {
   console.log(movies);
 
   renderMovies(movies);
+
+  // Add event listener for all the readmore button
+  const elements = document.querySelectorAll('.movie-plot');
+  elements.forEach((el) => truncateTextToggle(el, 100));
+}
+
+// ========= TRUNCATE PIPE =========
+
+function truncatePipe(text, maxLength = 100) {
+  return text.length > maxLength ? text.slice(0, 100) + '...' : text;
+}
+
+function truncateTextToggle(element, maxLength = 100) {
+  const fullText = element.textContent.trim();
+
+  if (fullText.length <= maxLength) return;
+
+  // initial state
+  let isTruncated = true;
+  element.textContent = truncatePipe(fullText, maxLength);
+
+  // Create the READMORE button
+  const btn = document.createElement('button');
+  btn.textContent = 'Read more';
+  btn.className = 'truncate-button';
+
+  btn.addEventListener('click', () => {
+    if (isTruncated) {
+      element.textContent = fullText;
+      btn.textContent = 'Read less';
+    } else {
+      element.textContent = truncatePipe(fullText, maxLength);
+      btn.textContent = 'Read more';
+    }
+
+    isTruncated = !isTruncated;
+    element.appendChild(btn);
+  });
+
+  element.appendChild(btn);
 }
