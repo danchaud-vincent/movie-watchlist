@@ -2,7 +2,6 @@ import { CONFIG } from '/config/main-config.js';
 
 export async function setMoviesInformation(moviesOMDB) {
   const moviesPromises = moviesOMDB.map((movie) => getMovieById(movie.imdbID));
-  console.log(moviesPromises);
 
   const movies = Promise.all(moviesPromises);
 
