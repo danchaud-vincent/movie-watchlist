@@ -37,10 +37,12 @@ p {
   --text: #ffffff;
   --warning-text: #787878;
   --movie-text: #a5a5a5;
+  --border: #2c2c2c;
 
   /* SIZES */
   --input-height: 38px;
   --br: 6px;
+  --border-size: 1.5px;
 }
 
 /* ======= GLOBAL STYLING ======= */
@@ -53,7 +55,7 @@ p {
 .hero {
   position: relative;
   border: 2px solid red;
-  height: 30vh;
+  height: 20vh;
 
   display: flex;
   flex-direction: column;
@@ -120,9 +122,39 @@ p {
 
 /* MAIN */
 main {
-  height: 70vh;
+  min-height: 80vh;
   border: 2px solid orange;
   background-color: var(--bg);
+}
+
+/* MOVIES */
+.movies-container {
+  margin-top: 2em;
+}
+
+.movie-container {
+  display: flex;
+  gap: 2em;
+  padding: 2em 0;
+  border-bottom: var(--border-size) solid var(--border);
+}
+
+.movie-container > img {
+  height: 250px;
+}
+
+.movie-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+}
+
+.movie-header,
+.movie-description {
+  display: flex;
+  align-items: center;
+  gap: 2em;
 }
 
 /* ======= FONTS ======= */
@@ -137,6 +169,21 @@ button {
 }
 
 h1,
+h2,
 a {
   color: var(--text);
+}
+
+.movie-header > h2 {
+  font-weight: 500;
+}
+
+.movie-header > p,
+.movie-description > p {
+  font-weight: 400;
+  color: var(--text);
+}
+
+.movie-plot {
+  color: var(--movie-text);
 }
