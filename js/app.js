@@ -1,4 +1,5 @@
 import { CONFIG } from '/config/main-config.js';
+import { getMoviesBySearch } from '/js/movies.js';
 
 getBackgroundPhoto();
 
@@ -16,6 +17,11 @@ async function getBackgroundPhoto() {
         Authorization: `Client-ID ${CONFIG.UNSLPASH_API_KEY}`,
       },
     });
+
+    if (!response.ok) {
+      throw Error('An error occured : Unsplash image not found');
+    }
+
     const data = await response.json();
     const imageUnsplash = data.urls.regular;
 
@@ -28,4 +34,17 @@ async function getBackgroundPhoto() {
     const defaultBackgroundImage = '/assets/images/movies-poster.jpg';
     setHeaderPhoto(defaultBackgroundImage);
   }
+}
+
+// EVENT LISTENER
+document.getElementById('form-search-movie').addEventListener('submit', handleMovieSearch);
+
+function renderMovies(movies) {}
+
+async function handleMovieSearch(e) {
+  e.preventDefault();
+  const movie = e.target.search.value;
+  const movies = await getMoviesBySearch(movie);
+
+  renderMovies(movies);
 }
