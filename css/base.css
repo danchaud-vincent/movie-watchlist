@@ -102,13 +102,15 @@ p {
   transform: translate(-50%, 50%);
 
   display: flex;
-  height: var(--input-height);
 }
 
 .search-bar > input {
   flex: 1 1 80%;
-
   border-radius: var(--br) 0 0 var(--br);
+  background-image: url('/assets/images/search-icon.png');
+  background-repeat: no-repeat;
+  background-position: top 50% left 10px;
+  padding: 10px 40px;
 }
 
 .search-bar > button {
