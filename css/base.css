@@ -31,10 +31,12 @@ p {
 
   /* COLORS */
   --bg: #121212;
+  --bg-light: #ffffff;
   --bg-input: #2e2e2f;
   --bg-icon: #2e2e2f;
   --bg-search: #4b4b4b;
   --text: #ffffff;
+  --text-dark: #121212;
   --warning-text: #787878;
   --input-text: #a5a5a5;
   --movie-text: #a5a5a5;
@@ -102,6 +104,12 @@ p {
   text-decoration: none;
 }
 
+.navbar a:active,
+.navbar a:focus,
+.navbar a:hover {
+  text-decoration: underline;
+}
+
 /* SEARCH BAR */
 .search-bar {
   position: absolute;
@@ -136,6 +144,11 @@ p {
   border-radius: 0 0 var(--br) var(--br);
   background-color: var(--bg-search);
   color: var(--text);
+}
+
+.search-bar > button:hover {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
 }
 
 /* MAIN */
@@ -187,6 +200,17 @@ button {
   cursor: pointer;
 }
 
+.readmore-btn {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.readmore-btn:hover {
+  text-decoration: underline;
+}
+
 /* ======= FONTS ======= */
 body {
   font-family: 'Inter', sans-serif;
@@ -225,6 +249,15 @@ a {
 /* ===== MEDIA QUERIES ==== */
 
 @media (min-width: 768px) {
+  /* FONTS */
+  h1 {
+    font-size: var(--fs-title);
+  }
+
+  .navbar a {
+    font-size: var(--fs-m);
+  }
+
   /* HEADER */
   .search-bar > input {
     max-width: 80%;
