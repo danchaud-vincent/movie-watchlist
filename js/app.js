@@ -16,7 +16,6 @@ document.addEventListener('click', (e) => {
 });
 
 // ======== RENDER ========
-
 function renderMovies(movies) {
   let html = '';
 
@@ -26,6 +25,12 @@ function renderMovies(movies) {
   }
 
   movies.forEach((movie) => {
+    let genresHtml = '';
+    const genres = movie.Genre.trim().split(',');
+    genres.forEach((genre) => {
+      genresHtml += `<p class="genre">${genre.trim()}</p>`;
+    });
+
     html += `
     <div class="movie-container">
       <img alt="movie poster" src="${movie.Poster}">
@@ -36,8 +41,11 @@ function renderMovies(movies) {
         <div class="movie-description">
           <p class="no-shrink">⭐ ${movie.imdbRating}</p>
           <p class="no-shrink">${movie.Runtime}</p>
-          <p>${movie.Genre}</p>
         </div>
+        <div class="movie-genres">
+          ${genresHtml}
+        </div>
+        <button class="watchlist-btn"><i class="fa-solid fa-plus"></i> Watchlist</button>
         <div class="movie-plot">
           <span class="plot-text" data-truncated="false" data-fulltext="${movie.Plot}">${movie.Plot}</span>
           <button class="readmore-btn"></button>
