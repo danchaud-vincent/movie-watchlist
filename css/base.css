@@ -123,13 +123,12 @@ p {
 /* MAIN */
 main {
   min-height: 80vh;
-  border: 2px solid orange;
   background-color: var(--bg);
 }
 
 /* MOVIES */
 .movies-container {
-  margin-top: 2em;
+  padding-top: 2em;
 }
 
 .movie-container {
@@ -146,7 +145,8 @@ main {
 .movie-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+
+  margin-top: 1em;
   gap: 1em;
 }
 
