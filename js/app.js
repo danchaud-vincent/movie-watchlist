@@ -1,5 +1,5 @@
 import { CONFIG } from '/config/main-config.js';
-import { getMoviesBySearch } from '/js/movies.js';
+import { getMoviesBySearch, setMoviesInformation } from '/js/movies.js';
 
 getBackgroundPhoto();
 
@@ -39,12 +39,44 @@ async function getBackgroundPhoto() {
 // EVENT LISTENER
 document.getElementById('form-search-movie').addEventListener('submit', handleMovieSearch);
 
-function renderMovies(movies) {}
+function renderMovies(movies) {
+  let html = '';
+
+  if (movies.length === 0) {
+    html = "Unable to find what you're looking for. Please try another search.";
+    return;
+  }
+
+  movies.forEach((movie) => {
+    html += `
+    <div class="movie-container">
+      <img alt="movie poster" src="${movie.Poster}">
+      <div class="movie-content">
+        <div class="movie-header">
+          <h2>${movie.Title}</h2>
+          <p>${movie.imdbRating}</p>
+        </div>
+        <div class="movie-description">
+          <p>${movie.Runtime}</p>
+          <p>${movie.Genre}</p>
+        </div>
+        <p class="movie-plot">${movie.Plot}</p>
+      </div>
+    </div>
+    `;
+  });
+  console.log(html);
+
+  document.getElementById('movies').innerHTML = html;
+}
 
 async function handleMovieSearch(e) {
   e.preventDefault();
   const movie = e.target.search.value;
-  const movies = await getMoviesBySearch(movie);
+  const moviesOMDB = await getMoviesBySearch(movie);
+  const movies = await setMoviesInformation(moviesOMDB);
+
+  console.log(movies);
 
   renderMovies(movies);
 }
