@@ -60,13 +60,19 @@ function renderMovies(movies) {
           <p>${movie.Runtime}</p>
           <p>${movie.Genre}</p>
         </div>
-        <p class="movie-plot">${movie.Plot}</p>
+        <div class="movie-plot">
+          <span class="plot-text" data-truncated="false" data-fulltext="${movie.Plot}">${movie.Plot}</span>
+          <button class="readmore-btn"></button>
+        </div>
       </div>
     </div>
     `;
   });
 
   document.getElementById('movies').innerHTML = html;
+  document.querySelectorAll('.movie-plot').forEach((plot) => {
+    truncateTextToggle(plot, 100);
+  });
 }
 
 async function handleMovieSearch(e) {
@@ -75,47 +81,43 @@ async function handleMovieSearch(e) {
   const moviesOMDB = await getMoviesBySearch(movie);
   const movies = await setMoviesInformation(moviesOMDB);
 
-  console.log(movies);
-
   renderMovies(movies);
-
-  // Add event listener for all the readmore button
-  const elements = document.querySelectorAll('.movie-plot');
-  elements.forEach((el) => truncateTextToggle(el, 100));
 }
 
 // ========= TRUNCATE PIPE =========
+
+document.addEventListener('click', (e) => {
+  // Event listener when readmore button triggered
+  if (e.target.classList.contains('readmore-btn')) {
+    const moviePlotEl = e.target.closest('.movie-plot');
+    truncateTextToggle(moviePlotEl, 100);
+  }
+});
 
 function truncatePipe(text, maxLength = 100) {
   return text.length > maxLength ? text.slice(0, 100) + '...' : text;
 }
 
 function truncateTextToggle(element, maxLength = 100) {
-  const fullText = element.textContent.trim();
+  // Get movie plot text
+  const plotTextEl = element.querySelector('.plot-text');
+  const readmoreBtn = element.querySelector('.readmore-btn');
 
-  if (fullText.length <= maxLength) return;
+  console.log(element, plotTextEl);
 
-  // initial state
-  let isTruncated = true;
-  element.textContent = truncatePipe(fullText, maxLength);
+  const plotText = plotTextEl.textContent.trim();
+  const fullText = plotTextEl.dataset.fulltext;
+  let isTruncated = plotTextEl.dataset.truncated === 'true';
+  console.log(isTruncated);
 
-  // Create the READMORE button
-  const btn = document.createElement('button');
-  btn.textContent = 'Read more';
-  btn.className = 'truncate-button';
+  if (isTruncated) {
+    plotTextEl.textContent = fullText;
+    readmoreBtn.textContent = 'READ LESS';
+  } else {
+    plotTextEl.textContent = truncatePipe(plotText, maxLength);
+    readmoreBtn.textContent = 'READ MORE';
+  }
 
-  btn.addEventListener('click', () => {
-    if (isTruncated) {
-      element.textContent = fullText;
-      btn.textContent = 'Read less';
-    } else {
-      element.textContent = truncatePipe(fullText, maxLength);
-      btn.textContent = 'Read more';
-    }
-
-    isTruncated = !isTruncated;
-    element.appendChild(btn);
-  });
-
-  element.appendChild(btn);
+  isTruncated = !isTruncated;
+  plotTextEl.dataset.truncated = isTruncated.toString();
 }
