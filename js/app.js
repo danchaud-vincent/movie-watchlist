@@ -53,11 +53,11 @@ function renderMovies(movies) {
       <img alt="movie poster" src="${movie.Poster}">
       <div class="movie-content">
         <div class="movie-header">
-          <h2>${movie.Title}</h2>
-          <p>${movie.imdbRating}</p>
+          <h2>${movie.Title}</h2> 
         </div>
         <div class="movie-description">
-          <p>${movie.Runtime}</p>
+          <p class="no-shrink">⭐ ${movie.imdbRating}</p>
+          <p class="no-shrink">${movie.Runtime}</p>
           <p>${movie.Genre}</p>
         </div>
         <div class="movie-plot">
