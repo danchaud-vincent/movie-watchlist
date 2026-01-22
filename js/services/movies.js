@@ -1,14 +1,25 @@
 import { CONFIG } from '/config/main-config.js';
 
-export async function setMoviesInformation(moviesOMDB) {
-  const moviesPromises = moviesOMDB.map((movie) => getMovieById(movie.imdbID));
+const STORAGE_MOVIES_KEY = 'movies';
 
-  const movies = Promise.all(moviesPromises);
+let movies = [];
 
-  return movies;
+export function loadMovies() {
+  return JSON.parse(localStorage.getItem(STORAGE_MOVIES_KEY)) || [];
 }
 
-export async function getMoviesBySearch(movie) {
+export function saveMovies(movies) {
+  localStorage.setItem(STORAGE_MOVIES_KEY, JSON.stringify(movies));
+}
+
+export function clearMovies() {
+  movies = [];
+  saveMovies(movies);
+}
+
+export async function forkJoinMovies(moviesOMDB, watchlist) {}
+
+export async function getMoviesWithDetailsBySearch(movie) {
   try {
     const searchMovieTemplate = movie.trim().replaceAll(' ', '+');
 
@@ -24,12 +35,22 @@ export async function getMoviesBySearch(movie) {
       throw Error(data.Error);
     }
 
-    return data.Search;
+    // fetch the data with more details
+    const moviesWithDetails = await fetchMoviesWithDetails(data.Search);
+
+    return moviesWithDetails;
   } catch (err) {
     console.error(`getMoviesBySearch(${movie}):`, err.message);
 
     return [];
   }
+}
+
+async function fetchMoviesWithDetails(moviesOMDB) {
+  const moviesPromises = moviesOMDB.map((movie) => getMovieById(movie.imdbID));
+  const movies = Promise.all(moviesPromises);
+
+  return movies;
 }
 
 async function getMovieById(movieId) {
