@@ -1,10 +1,9 @@
-import { CONFIG } from '/config/main-config.js';
 import {
   getMoviesWithDetailsBySearch,
   loadMovies,
-  saveMovies,
   clearMovies,
   forkJoinMovies,
+  getMovieByIdFromStorage,
 } from './services/movies.js';
 import { truncateTextToggle } from './pipes/truncatePipe.js';
 import { toggleMovieInWatchlist, clearWatchlist, loadWatchlist } from './watchlist.js';
@@ -25,20 +24,11 @@ document.addEventListener('click', (e) => {
 
   // Event listener when click watchlist button
   if (e.target.classList.contains('watchlist-btn')) {
+    // get the movie container and retrieve the movie id
     const movieContainer = e.target.closest('.movie-container');
     const movieId = movieContainer.dataset.movieId;
-    const movies = loadMovies();
-    const movie = movies.filter((movie) => movie.imdbID === movieId)[0];
 
-    toggleMovieInWatchlist(movie);
-
-    const watchlist = loadWatchlist();
-    const moviesUpdated = forkJoinMovies(movies, watchlist);
-
-    // save in localstorage
-    saveMovies(moviesUpdated);
-
-    renderMovies(moviesUpdated);
+    handleToggleMovieInWatchlist(movieId);
   }
 });
 
@@ -98,52 +88,39 @@ function renderMovies(movies) {
 }
 
 //  ========= FUNCTIONS ===================
-function setHeaderPhoto(imageURL) {
-  document.getElementById('hero').style.backgroundImage = ` url(${imageURL})`;
-}
-
-async function getBackgroundPhoto() {
-  try {
-    // get a random movie image with the unsplash API
-    const baseURL = `https://api.unsplash.com/photos/random/!!!?query=movie`;
-
-    const response = await fetch(baseURL, {
-      headers: {
-        Authorization: `Client-ID ${CONFIG.UNSLPASH_API_KEY}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw Error('An error occured : Unsplash image not found');
-    }
-
-    const data = await response.json();
-    const imageUnsplash = data.urls.regular;
-
-    // set the background image
-    // setHeaderPhoto(imageUnsplash);
-  } catch (err) {
-    console.log(err.message);
-
-    // set default header image
-    const defaultBackgroundImage = '/assets/images/movies-poster.jpg';
-    setHeaderPhoto(defaultBackgroundImage);
-  }
-}
-
 async function handleMovieSearch(e) {
   e.preventDefault();
 
-  // get the movies with details
+  // clear movies storage
+  clearMovies();
+
+  // get the movie name
   const movie = e.target.search.value;
+
+  // Get the movies and fetch data
   const moviesOMDB = await getMoviesWithDetailsBySearch(movie);
   const watchlist = loadWatchlist();
-
   const movies = forkJoinMovies(moviesOMDB, watchlist);
-
-  // save in localstorage
-  saveMovies(movies);
 
   // render
   renderMovies(movies);
+}
+
+function handleToggleMovieInWatchlist(movieId) {
+  // Get movie data
+  const movie = getMovieByIdFromStorage(movieId);
+
+  if (!movie) {
+    return;
+  }
+
+  // update watchlist
+  const watchlist = toggleMovieInWatchlist(movie);
+
+  // load movies and update data with new watchlist
+  const movies = loadMovies();
+  const moviesUpdated = forkJoinMovies(movies, watchlist);
+
+  // render
+  renderMovies(moviesUpdated);
 }
