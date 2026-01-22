@@ -1,9 +1,12 @@
 const STORAGE_WATCHLIST_KEY = 'watchlist';
 
-let watchlist = loadWatchlist();
-
 export function loadWatchlist() {
-  return JSON.parse(localStorage.getItem(STORAGE_WATCHLIST_KEY)) || [];
+  try {
+    const data = localStorage.getItem(STORAGE_WATCHLIST_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch (error) {
+    console.error('Errror when loading the watchlist', error.message);
+  }
 }
 
 function saveWatchlist(watchlist) {
@@ -11,26 +14,20 @@ function saveWatchlist(watchlist) {
 }
 
 export function clearWatchlist() {
-  watchlist = [];
-  saveWatchlist(watchlist);
-}
-
-function addMovieToWatchlist(movie) {
-  watchlist.push(movie);
-  saveWatchlist(watchlist);
-}
-
-function removeMovieFromWatchlist(movieId) {
-  watchlist = watchlist.filter((movie) => movie.imdbID !== movieId);
-  saveWatchlist(watchlist);
+  saveWatchlist([]);
 }
 
 export function toggleMovieInWatchlist(movie) {
+  const watchlist = loadWatchlist();
+
   const isInWatchlist = watchlist.some((movieInWatchlist) => movieInWatchlist.imdbID === movie.imdbID);
 
-  if (isInWatchlist) {
-    removeMovieFromWatchlist(movie.imdbID);
-  } else {
-    addMovieToWatchlist(movie);
-  }
+  const updatedWatchlist = isInWatchlist
+    ? watchlist.filter((movieWatchlist) => movieWatchlist.imdbID !== movie.imdbID)
+    : [...watchlist, movie];
+
+  // save new watchlist
+  saveWatchlist(updatedWatchlist);
+
+  return updatedWatchlist;
 }
