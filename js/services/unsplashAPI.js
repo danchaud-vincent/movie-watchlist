@@ -29,7 +29,7 @@ export function setHeroBackground(elementId, imageURL) {
 export async function fetchRandomBackgroundImage(query = 'movie') {
   try {
     // get a random movie image with the unsplash API
-    const url = `https://api.unsplash.com/photos/random/!!!?query=${query}`;
+    const url = `https://api.unsplash.com/photos/random/?query=${query}`;
 
     const response = await fetch(url, {
       headers: {
