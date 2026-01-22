@@ -1,6 +1,6 @@
 import { CONFIG } from '/config/main-config.js';
-import { getMoviesBySearch, setMoviesInformation } from '/js/movies.js';
-import { truncateTextToggle } from './truncatePipe.js';
+import { getMoviesBySearch, setMoviesInformation } from '/js/services/movies.js';
+import { truncateTextToggle } from './pipes/truncatePipe.js';
 
 getBackgroundPhoto();
 
