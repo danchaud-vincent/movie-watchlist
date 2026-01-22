@@ -60,7 +60,7 @@ export async function getMoviesWithDetailsBySearch(query) {
 
     return moviesWithDetails;
   } catch (err) {
-    console.error(`getMoviesBySearch(${movie}):`, err.message);
+    console.error(`getMoviesBySearch(${query}):`, err.message);
 
     return [];
   }
