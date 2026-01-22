@@ -28,7 +28,7 @@ export function getMovieByIdFromStorage(movieId) {
   return movies.find((movie) => movie.imdbID === movieId) || null;
 }
 
-export function forkJoinMovies(moviesOMDB, watchlist) {
+export function mergeMoviesWithWatchlist(moviesOMDB, watchlist) {
   const movies = moviesOMDB.map((movie) => {
     return {
       ...movie,

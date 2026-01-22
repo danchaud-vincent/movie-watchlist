@@ -2,9 +2,8 @@ import {
   getMoviesWithDetailsBySearch,
   loadMovies,
   clearMovies,
-  forkJoinMovies,
+  mergeMoviesWithWatchlist,
   getMovieByIdFromStorage,
-  getMovieById,
 } from './services/movies.js';
 import { truncateTextToggle } from './pipes/truncatePipe.js';
 import { toggleMovieInWatchlist, loadWatchlist } from './watchlist.js';
@@ -19,7 +18,6 @@ if (searchForm) {
   searchForm.addEventListener('submit', handleMovieSearch);
 } else {
   const watchlist = loadWatchlist();
-  console.log(watchlist);
   renderMovies(watchlist);
 }
 
@@ -32,7 +30,7 @@ function handleGlobalClick(e) {
   }
 
   if (e.target.classList.contains('watchlist-btn')) {
-    handleWatchlistClick(e);
+    handleToggleMovieInWatchlist(e);
   }
 }
 
@@ -42,11 +40,7 @@ function handleReadMoreClick(e) {
 }
 
 function handleWatchlistClick(e) {
-  // get the movie container and retrieve the movie id
-  const movieContainer = e.target.closest('.movie-container');
-  const movieId = movieContainer.dataset.movieId;
-
-  handleToggleMovieInWatchlist(movieId);
+  handleToggleMovieInWatchlist(e);
 }
 
 async function handleMovieSearch(e) {
@@ -61,14 +55,19 @@ async function handleMovieSearch(e) {
   // Get the movies with all the data and get the watchlist
   const moviesOMDB = await getMoviesWithDetailsBySearch(movie);
   const watchlist = loadWatchlist();
+  const moviesWithWatchlistStatus = mergeMoviesWithWatchlist(moviesOMDB, watchlist);
 
   // render
-  renderMovies(forkJoinMovies(moviesOMDB, watchlist));
+  renderMovies(moviesWithWatchlistStatus);
 }
 
-async function handleToggleMovieInWatchlist(movieId) {
+function handleToggleMovieInWatchlist(e) {
+  // get the movie container and retrieve the movie id
+  const movieContainer = e.target.closest('.movie-container');
+  const movieId = movieContainer.dataset.movieId;
+
   // Get the movie data
-  const movie = await getMovieById(movieId);
+  const movie = getMovieByIdFromStorage(movieId);
 
   if (!movie) {
     return;
@@ -80,10 +79,10 @@ async function handleToggleMovieInWatchlist(movieId) {
   if (window.location.href.includes('index.html')) {
     // load movies and update data with new watchlist
     const movies = loadMovies();
-    const moviesUpdated = forkJoinMovies(movies, watchlist);
+    const moviesWithWatchlistStatus = mergeMoviesWithWatchlist(movies, watchlist);
 
     // render movies
-    renderMovies(moviesUpdated);
+    renderMovies(moviesWithWatchlistStatus);
   } else {
     // render watchlist
     renderMovies(watchlist);
@@ -143,9 +142,8 @@ function createMovieCard(movie) {
 
 function createGenresHtml(genres) {
   return genres
-    .trim()
     .split(',')
-    .map((genre) => `<p class="genre">${genre.trim()}</p>`)
+    .map((genre) => `<p class="genre">${genre}</p>`)
     .join('');
 }
 
