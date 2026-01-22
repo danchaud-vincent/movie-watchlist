@@ -1,7 +1,16 @@
 import { CONFIG } from '/config/main-config.js';
-import { getMoviesBySearch, setMoviesInformation } from '/js/services/movies.js';
+import {
+  getMoviesWithDetailsBySearch,
+  loadMovies,
+  saveMovies,
+  clearMovies,
+  forkJoinMovies,
+} from './services/movies.js';
 import { truncateTextToggle } from './pipes/truncatePipe.js';
+import { toggleMovieInWatchlist, clearWatchlist, loadWatchlist } from './watchlist.js';
 
+clearMovies();
+clearWatchlist();
 getBackgroundPhoto();
 
 // EVENT LISTENER
@@ -18,7 +27,18 @@ document.addEventListener('click', (e) => {
   if (e.target.classList.contains('watchlist-btn')) {
     const movieContainer = e.target.closest('.movie-container');
     const movieId = movieContainer.dataset.movieId;
-    console.log(e.target, movieId);
+    const movies = loadMovies();
+    const movie = movies.filter((movie) => movie.imdbID === movieId)[0];
+
+    toggleMovieInWatchlist(movie);
+
+    const watchlist = loadWatchlist();
+    const moviesUpdated = forkJoinMovies(movies, watchlist);
+
+    // save in localstorage
+    saveMovies(moviesUpdated);
+
+    renderMovies(moviesUpdated);
   }
 });
 
@@ -35,12 +55,16 @@ function renderMovies(movies) {
     `;
   }
 
-  movies.slice(0, 1).forEach((movie) => {
+  movies.forEach((movie) => {
     let genresHtml = '';
     const genres = movie.Genre.trim().split(',');
     genres.forEach((genre) => {
       genresHtml += `<p class="genre">${genre.trim()}</p>`;
     });
+
+    let btnWatchlist = movie.isSubscribed
+      ? `<i class="fa-solid fa-minus"></i> Remove`
+      : `<i class="fa-solid fa-plus"></i> Watchlist`;
 
     html += `
     <div class="movie-container" data-movie-id=${movie.imdbID}>
@@ -56,7 +80,7 @@ function renderMovies(movies) {
         <div class="movie-genres">
           ${genresHtml}
         </div>
-        <button class="watchlist-btn"><i class="fa-solid fa-plus"></i> Watchlist</button>
+        <button class="watchlist-btn">${btnWatchlist}</button>
         <div class="movie-plot">
           <span class="plot-text" data-truncated="false" data-fulltext="${movie.Plot}">${movie.Plot}</span>
           <button class="readmore-btn"></button>
@@ -66,6 +90,7 @@ function renderMovies(movies) {
     `;
   });
 
+  // render HTML
   document.getElementById('movies').innerHTML = html;
   document.querySelectorAll('.movie-plot').forEach((plot) => {
     truncateTextToggle(plot, 100);
@@ -108,11 +133,17 @@ async function getBackgroundPhoto() {
 
 async function handleMovieSearch(e) {
   e.preventDefault();
+
+  // get the movies with details
   const movie = e.target.search.value;
-  const moviesOMDB = await getMoviesBySearch(movie);
-  const movies = await setMoviesInformation(moviesOMDB);
+  const moviesOMDB = await getMoviesWithDetailsBySearch(movie);
+  const watchlist = loadWatchlist();
 
-  console.log(moviesOMDB, movies);
+  const movies = forkJoinMovies(moviesOMDB, watchlist);
 
+  // save in localstorage
+  saveMovies(movies);
+
+  // render
   renderMovies(movies);
 }

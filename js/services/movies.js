@@ -17,7 +17,18 @@ export function clearMovies() {
   saveMovies(movies);
 }
 
-export async function forkJoinMovies(moviesOMDB, watchlist) {}
+export function forkJoinMovies(moviesOMDB, watchlist) {
+  const movies = moviesOMDB.map((movie) => {
+    return {
+      ...movie,
+      isSubscribed: watchlist.some((subscription) => {
+        return subscription.imdbID === movie.imdbID;
+      }),
+    };
+  });
+
+  return movies;
+}
 
 export async function getMoviesWithDetailsBySearch(movie) {
   try {
