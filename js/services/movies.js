@@ -2,10 +2,14 @@ import { CONFIG } from '/config/main-config.js';
 
 const STORAGE_MOVIES_KEY = 'movies';
 
-let movies = [];
-
+// ----- LOCAL STORAGE FUNCTIONS -----
 export function loadMovies() {
-  return JSON.parse(localStorage.getItem(STORAGE_MOVIES_KEY)) || [];
+  try {
+    const data = localStorage.getItem(STORAGE_MOVIES_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch (error) {
+    console.error('Error when loading movies data:', error.message);
+  }
 }
 
 export function saveMovies(movies) {
@@ -13,8 +17,15 @@ export function saveMovies(movies) {
 }
 
 export function clearMovies() {
-  movies = [];
+  const movies = [];
   saveMovies(movies);
+}
+
+export function getMovieByIdFromStorage(movieId) {
+  // Get the movies
+  const movies = loadMovies();
+
+  return movies.find((movie) => movie.imdbID === movieId) || null;
 }
 
 export function forkJoinMovies(moviesOMDB, watchlist) {
@@ -27,20 +38,18 @@ export function forkJoinMovies(moviesOMDB, watchlist) {
     };
   });
 
+  // save in localstorage
+  saveMovies(movies);
+
   return movies;
 }
 
-export async function getMoviesWithDetailsBySearch(movie) {
+// ----- API FUNCTIONS -----
+export async function getMoviesWithDetailsBySearch(query) {
   try {
-    const searchMovieTemplate = movie.trim().replaceAll(' ', '+');
-
-    const baseURL = `https://www.omdbapi.com/?s=${searchMovieTemplate}&type=movie&apikey=${CONFIG.OMDB_API_KEY}`;
-    const response = await fetch(baseURL);
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw Error('Network error');
-    }
+    const searchMovie = encodeURIComponent(query);
+    const url = `https://www.omdbapi.com/?s=${searchMovie}&type=movie&apikey=${CONFIG.OMDB_API_KEY}`;
+    const data = await fetchJSON(url);
 
     if (data.Response === 'False') {
       throw Error(data.Error);
@@ -66,13 +75,8 @@ async function fetchMoviesWithDetails(moviesOMDB) {
 
 async function getMovieById(movieId) {
   try {
-    const baseURL = `https://www.omdbapi.com/?i=${movieId}&type=movie&plot=full&apikey=${CONFIG.OMDB_API_KEY}`;
-    const response = await fetch(baseURL);
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw Error('Network error');
-    }
+    const url = `https://www.omdbapi.com/?i=${movieId}&type=movie&plot=full&apikey=${CONFIG.OMDB_API_KEY}`;
+    const data = await fetchJSON(url);
 
     if (data.Response === 'False') {
       throw Error(data.Error);
@@ -83,5 +87,18 @@ async function getMovieById(movieId) {
     console.error(`getMovieById(${movieId}):`, err.message);
 
     return null;
+  }
+}
+
+async function fetchJSON(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw Error(`Network error: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+  } catch (err) {
+    console.error('Error :', err.message);
   }
 }
