@@ -7,10 +7,9 @@ import {
 } from './services/movies.js';
 import { truncateTextToggle } from './pipes/truncatePipe.js';
 import { toggleMovieInWatchlist, clearWatchlist, loadWatchlist } from './watchlist.js';
+import { loadRandomHeroImage } from './services/unsplashAPI.js';
 
-clearMovies();
-clearWatchlist();
-getBackgroundPhoto();
+loadRandomHeroImage('hero');
 
 // EVENT LISTENER
 document.getElementById('form-search-movie').addEventListener('submit', handleMovieSearch);
