@@ -73,7 +73,7 @@ async function fetchMoviesWithDetails(moviesOMDB) {
   return movies;
 }
 
-async function getMovieById(movieId) {
+export async function getMovieById(movieId) {
   try {
     const url = `https://www.omdbapi.com/?i=${movieId}&type=movie&plot=full&apikey=${CONFIG.OMDB_API_KEY}`;
     const data = await fetchJSON(url);
