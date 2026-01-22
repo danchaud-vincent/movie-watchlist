@@ -2,10 +2,14 @@ const STORAGE_WATCHLIST_KEY = 'watchlist';
 
 export function loadWatchlist() {
   try {
-    const data = localStorage.getItem(STORAGE_WATCHLIST_KEY);
-    return data ? JSON.parse(data) : [];
+    const dataStorage = localStorage.getItem(STORAGE_WATCHLIST_KEY);
+    const data = dataStorage ? JSON.parse(dataStorage) : [];
+    // add isSubscribed to true for all movie in watchlist
+    return data.map((movie) => {
+      return { ...movie, isSubscribed: true };
+    });
   } catch (error) {
-    console.error('Errror when loading the watchlist', error.message);
+    console.error('Error when loading the watchlist', error.message);
   }
 }
 
@@ -21,6 +25,7 @@ export function toggleMovieInWatchlist(movie) {
   const watchlist = loadWatchlist();
 
   const isInWatchlist = watchlist.some((movieInWatchlist) => movieInWatchlist.imdbID === movie.imdbID);
+  console.log(isInWatchlist);
 
   const updatedWatchlist = isInWatchlist
     ? watchlist.filter((movieWatchlist) => movieWatchlist.imdbID !== movie.imdbID)
