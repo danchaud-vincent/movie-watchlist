@@ -163,19 +163,35 @@ p {
 
 /* MAIN */
 main {
-  min-height: var(--height-main);
   background-color: var(--bg);
 }
 
 /* MOVIE CONTAINER */
 .movies-container {
   padding-top: 2em;
+  min-height: var(--height-main);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.warning-container {
+  align-self: center;
+  margin: auto 0;
+  text-align: center;
+  color: var(--warning-text);
+}
+
+.warning-icon {
+  width: 50px;
 }
 
 .movie-container {
+  width: 100%;
+  padding: 2em 0;
+
   display: flex;
   flex-direction: column;
-  padding: 2em 0;
 
   border-bottom: var(--border-size) solid var(--border);
 }
@@ -199,8 +215,9 @@ main {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-
   gap: 1em;
+
+  color: var(--text);
 }
 
 .movie-plot {
@@ -252,8 +269,7 @@ button {
 /*  COLORS  */
 h1,
 h2,
-a,
-p {
+a {
   color: var(--text);
 }
 

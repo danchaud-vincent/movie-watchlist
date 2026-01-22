@@ -13,6 +13,13 @@ document.addEventListener('click', (e) => {
     const moviePlotEl = e.target.closest('.movie-plot');
     truncateTextToggle(moviePlotEl, 100);
   }
+
+  // Event listener when click watchlist button
+  if (e.target.classList.contains('watchlist-btn')) {
+    const movieContainer = e.target.closest('.movie-container');
+    const movieId = movieContainer.dataset.movieId;
+    console.log(e.target, movieId);
+  }
 });
 
 // ======== RENDER ========
@@ -20,11 +27,15 @@ function renderMovies(movies) {
   let html = '';
 
   if (movies.length === 0) {
-    html = "Unable to find what you're looking for. Please try another search.";
-    return;
+    html = `
+      <div class="warning-container">
+        <img class='warning-icon' src="/assets/images/movie-icon.png" alt="movie icon">
+        <p class='warning-content'>Unable to find what you're looking for. Please try another search.</p>
+      </div>
+    `;
   }
 
-  movies.forEach((movie) => {
+  movies.slice(0, 1).forEach((movie) => {
     let genresHtml = '';
     const genres = movie.Genre.trim().split(',');
     genres.forEach((genre) => {
@@ -32,7 +43,7 @@ function renderMovies(movies) {
     });
 
     html += `
-    <div class="movie-container">
+    <div class="movie-container" data-movie-id=${movie.imdbID}>
       <img alt="movie poster" src="${movie.Poster}">
       <div class="movie-content">
         <div class="movie-header">
@@ -100,6 +111,8 @@ async function handleMovieSearch(e) {
   const movie = e.target.search.value;
   const moviesOMDB = await getMoviesBySearch(movie);
   const movies = await setMoviesInformation(moviesOMDB);
+
+  console.log(moviesOMDB, movies);
 
   renderMovies(movies);
 }
