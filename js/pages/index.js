@@ -1,7 +1,7 @@
 import { renderMovies } from '../components/renderMovies.js';
-import { getMoviesWithDetailsBySearch, mergeMoviesWithWatchlist } from '../services/movies.js';
-import { loadWatchlist } from '../services/watchlist.js';
-import { loadRandomHeroImage } from '../services/unsplashAPI.js';
+import { getMoviesWithDetailsBySearch, mergeMoviesWithWatchlist } from '../services/moviesService.js';
+import { loadWatchlist } from '../services/watchlistService.js';
+import { loadRandomHeroImage } from '../services/unsplashService.js';
 
 const searchForm = document.getElementById('form-search-movie');
 

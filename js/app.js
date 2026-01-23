@@ -4,10 +4,10 @@ import {
   clearMovies,
   mergeMoviesWithWatchlist,
   getMovieByIdFromStorage,
-} from './services/movies.js';
+} from './services/moviesService.js';
 import { truncateTextToggle } from './pipes/truncatePipe.js';
-import { toggleMovieInWatchlist, loadWatchlist, clearWatchlist } from './services/watchlist.js';
-import { loadRandomHeroImage } from './services/unsplashAPI.js';
+import { toggleMovieInWatchlist, loadWatchlist, clearWatchlist } from './services/watchlistService.js';
+import { loadRandomHeroImage } from './services/unsplashService.js';
 
 const PAGE_TYPES = {
   INDEX: 'index',
