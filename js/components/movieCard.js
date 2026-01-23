@@ -1,7 +1,9 @@
 export function createMovieCard(movie) {
   return `
     <div class="movie-container" data-movie-id=${movie.imdbID}>
-      <img alt="movie poster" src="${movie.Poster}">
+      <a href="article.html?id=${movie.imdbID}" class="movie-link">
+        <img class="movie-poster" alt="movie poster" src="${movie.Poster}">
+      </a>
       <div class="movie-content">
         <div class="movie-header">
           <h2>${movie.Title}</h2> 

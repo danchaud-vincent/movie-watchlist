@@ -9,6 +9,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-size: clamp(16px, 1.2vw, 18px);
 }
 
 h1,
@@ -104,6 +105,7 @@ p {
 }
 
 .navbar a {
+  font-size: var(--fs-m);
   text-decoration: none;
 }
 
@@ -194,13 +196,23 @@ main {
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   border-bottom: var(--border-size) solid var(--border);
 }
 
-.movie-container > img {
-  height: 250px;
+.movie-link {
+  width: 80%;
+  max-height: 400px;
+}
+
+.movie-poster {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 400px;
   object-fit: contain;
+
   border-radius: var(--br);
 }
 
@@ -224,18 +236,20 @@ main {
 
 .movie-plot {
   color: var(--movie-text);
+  font-size: var(--fs-s);
 }
 
 .genre {
   padding: 0.5em;
   color: var(--text);
   font-weight: 400;
-  font-size: var(--fs-xs);
+  font-size: var(--fs-s);
   border: 1px solid var(--bg-light);
 }
 
 .readmore-btn {
   color: var(--text);
+  font-size: var(--fs-s);
   font-weight: 600;
 }
 
@@ -247,6 +261,7 @@ main {
   align-self: center;
   padding: 0.75em;
 
+  font-size: var(--fs-s);
   color: var(--text);
   border-radius: 25px;
   border: 2px solid var(--bg-light);
@@ -302,10 +317,6 @@ button {
     font-size: var(--fs-title);
   }
 
-  .navbar a {
-    font-size: var(--fs-m);
-  }
-
   /* HEADER */
   .search-bar > input {
     max-width: 80%;
@@ -328,15 +339,30 @@ button {
   .movie-container {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     gap: 2em;
   }
 
   .movie-content {
+    flex: 1;
     display: flex;
     flex-direction: column;
 
     margin-top: 1em;
     gap: 1em;
+  }
+
+  .movie-link {
+    flex: 0 0 40%;
+    max-height: none;
+    max-width: 300px;
+  }
+
+  .movie-poster {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: none;
   }
 
   /* BUTTON */
