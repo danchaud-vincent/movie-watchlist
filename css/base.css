@@ -102,10 +102,13 @@ p {
 
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
 .navbar a {
-  font-size: var(--fs-m);
+  font-size: var(--fs-s);
   text-decoration: none;
 }
 
@@ -163,16 +166,15 @@ p {
   background-color: var(--bg-light);
 }
 
-/* MAIN */
-main {
+/* MOVIE CONTAINER */
+main,
+.movies-container {
   background-color: var(--bg);
 }
 
-/* MOVIE CONTAINER */
 .movies-container {
   padding-top: 2em;
   min-height: var(--height-main);
-
   display: flex;
   flex-direction: column;
 }
@@ -318,6 +320,16 @@ button {
   }
 
   /* HEADER */
+  .navbar > ul {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+  }
+
+  .navbar a {
+    font-size: var(--fs-s);
+  }
+
   .search-bar > input {
     max-width: 80%;
     flex: 1 1 80%;

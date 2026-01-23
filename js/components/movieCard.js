@@ -25,13 +25,13 @@ export function createMovieCard(movie) {
     `;
 }
 
-function createGenresHtml(genres) {
+export function createGenresHtml(genres) {
   return genres
     .split(',')
     .map((genre) => `<p class="genre">${genre}</p>`)
     .join('');
 }
 
-function createWatchlistButton(isSubscribed) {
+export function createWatchlistButton(isSubscribed) {
   return isSubscribed ? `<i class="fa-solid fa-minus"></i> Remove` : `<i class="fa-solid fa-plus"></i> Watchlist`;
 }

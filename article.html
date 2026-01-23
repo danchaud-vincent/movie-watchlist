@@ -25,6 +25,7 @@
 
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/article.css" />
   </head>
   <body>
     <header id="hero" class="hero">
@@ -32,13 +33,37 @@
         <h1>Article</h1>
         <nav class="navbar">
           <ul>
-            <li><a href="/watchlist.html">Search for a movie</a></li>
+            <li><a href="/index.html">Search for a movie</a></li>
             <li><a href="/watchlist.html">My Watchlist</a></li>
           </ul>
         </nav>
       </div>
     </header>
-    <main></main>
-    <script src="" type="module"></script>
+    <main>
+      <article class="movie-article wrapper">
+        <section class="movie-container">
+          <div class="movie-link">
+            <img id="movie-poster" class="movie-poster" alt="movie poster" src="" />
+          </div>
+
+          <div class="movie-content">
+            <div class="movie-header">
+              <h2 id="movie-title"></h2>
+            </div>
+            <div class="movie-description">
+              <p class="no-shrink" id="movie-rating">⭐</p>
+              <p class="no-shrink" id="movie-duration"></p>
+            </div>
+            <div class="movie-genres" id="movie-genres"></div>
+            <button class="watchlist-btn" id="movie-watchlist"></button>
+            <div class="movie-plot">
+              <span class="plot-text" data-truncated="false" data-fulltext="" id="movie-plot"></span>
+              <button class="readmore-btn"></button>
+            </div>
+          </div>
+        </section>
+      </article>
+    </main>
+    <script src="/js/pages/article.js" type="module"></script>
   </body>
 </html>
