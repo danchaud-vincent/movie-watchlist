@@ -1,4 +1,5 @@
 import { getMessageContainer } from './messageComponent.js';
+import { createMovieCard } from './movieCard.js';
 
 export function renderMovies(movies, pageType) {
   const container = document.getElementById('movies');
