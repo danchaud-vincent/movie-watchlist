@@ -2,6 +2,7 @@ import { renderMovies } from '../components/renderMovies.js';
 import { getMoviesWithDetailsBySearch, loadMovies, mergeMoviesWithWatchlist } from '../services/moviesService.js';
 import { loadWatchlist, toggleMovieInWatchlist } from '../services/watchlistService.js';
 import { loadRandomHeroImage } from '../services/unsplashService.js';
+import { handleReadMoreClick } from '../handlers/readmoreClick.js';
 
 const searchForm = document.getElementById('form-search-movie');
 
@@ -13,6 +14,10 @@ searchForm.addEventListener('submit', handleMovieSearch);
 document.addEventListener('click', handleGlobalClick);
 
 function handleGlobalClick(e) {
+  if (e.target.classList.contains('readmore-btn')) {
+    handleReadMoreClick(e);
+  }
+
   if (e.target.classList.contains('watchlist-btn')) {
     handleToggleMovieInWatchlist(e);
   }

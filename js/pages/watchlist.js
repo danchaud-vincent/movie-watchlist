@@ -1,6 +1,7 @@
 import { loadRandomHeroImage } from '../services/unsplashService.js';
 import { renderMovies } from '../components/renderMovies.js';
 import { loadWatchlist, toggleMovieInWatchlist } from '../services/watchlistService.js';
+import { handleReadMoreClick } from '../handlers/readmoreClick.js';
 
 // set hero background image
 loadRandomHeroImage('hero');
@@ -13,6 +14,10 @@ renderMovies(watchlist, 'watchlist');
 document.addEventListener('click', handleGlobalClick);
 
 function handleGlobalClick(e) {
+  if (e.target.classList.contains('readmore-btn')) {
+    handleReadMoreClick(e);
+  }
+
   if (e.target.classList.contains('watchlist-btn')) {
     handleToggleMovieInWatchlist(e);
   }
