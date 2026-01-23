@@ -100,7 +100,8 @@ function renderMovies(movies, pageType = PAGE_TYPES.INDEX) {
   const container = document.getElementById('movies');
 
   if (!movies.length) {
-    getEmptyStateHtml(pageType);
+    const emptyState = getEmptyStateHtml(pageType);
+    container.innerHTML = emptyState;
     return;
   }
 
@@ -113,9 +114,12 @@ function renderMovies(movies, pageType = PAGE_TYPES.INDEX) {
 }
 
 function getEmptyStateHtml(pageType) {
-  const messageContainer = document.getElementById('message-container');
-
-  messageContainer.querySelector('.message-content').textContent = EMPTY_STATE_TEXT[pageType];
+  return `
+      <div id="message-container" class="message-container">
+          <img class="movie-icon" src="/assets/images/movie-icon.png" alt="movie icon" />
+          <p class="message-content">${EMPTY_STATE_TEXT[pageType]}</p>
+        </div>
+  `;
 }
 
 function createMovieCard(movie) {
