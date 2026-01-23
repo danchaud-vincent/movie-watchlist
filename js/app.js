@@ -6,8 +6,18 @@ import {
   getMovieByIdFromStorage,
 } from './services/movies.js';
 import { truncateTextToggle } from './pipes/truncatePipe.js';
-import { toggleMovieInWatchlist, loadWatchlist } from './watchlist.js';
+import { toggleMovieInWatchlist, loadWatchlist, clearWatchlist } from './watchlist.js';
 import { loadRandomHeroImage } from './services/unsplashAPI.js';
+
+const PAGE_TYPES = {
+  INDEX: 'index',
+  WATCHLIST: 'watchlist',
+};
+
+const EMPTY_STATE_TEXT = {
+  [PAGE_TYPES.INDEX]: "Unable to find what you're looking for. Please try another search.",
+  [PAGE_TYPES.WATCHLIST]: 'Your watchlist is looking a little empty...',
+};
 
 loadRandomHeroImage('hero');
 
@@ -18,7 +28,7 @@ if (searchForm) {
   searchForm.addEventListener('submit', handleMovieSearch);
 } else {
   const watchlist = loadWatchlist();
-  renderMovies(watchlist);
+  renderMovies(watchlist, PAGE_TYPES.WATCHLIST);
 }
 
 document.addEventListener('click', handleGlobalClick);
@@ -39,15 +49,11 @@ function handleReadMoreClick(e) {
   truncateTextToggle(moviePlotEl, 100);
 }
 
-function handleWatchlistClick(e) {
-  handleToggleMovieInWatchlist(e);
-}
-
 async function handleMovieSearch(e) {
   e.preventDefault();
 
   // clear movies storage
-  clearMovies();
+  // clearMovies();
 
   // get the movie name
   const movie = e.target.search.value.trim();
@@ -58,7 +64,7 @@ async function handleMovieSearch(e) {
   const moviesWithWatchlistStatus = mergeMoviesWithWatchlist(moviesOMDB, watchlist);
 
   // render
-  renderMovies(moviesWithWatchlistStatus);
+  renderMovies(moviesWithWatchlistStatus, PAGE_TYPES.INDEX);
 }
 
 function handleToggleMovieInWatchlist(e) {
@@ -82,19 +88,19 @@ function handleToggleMovieInWatchlist(e) {
     const moviesWithWatchlistStatus = mergeMoviesWithWatchlist(movies, watchlist);
 
     // render movies
-    renderMovies(moviesWithWatchlistStatus);
+    renderMovies(moviesWithWatchlistStatus, PAGE_TYPES.INDEX);
   } else {
     // render watchlist
-    renderMovies(watchlist);
+    renderMovies(watchlist, PAGE_TYPES.WATCHLIST);
   }
 }
 
 // ------------ DOM ------------
-function renderMovies(movies) {
+function renderMovies(movies, pageType = PAGE_TYPES.INDEX) {
   const container = document.getElementById('movies');
 
   if (!movies.length) {
-    container.innerHTML = getEmptyStateHtml();
+    getEmptyStateHtml(pageType);
     return;
   }
 
@@ -106,13 +112,10 @@ function renderMovies(movies) {
   });
 }
 
-function getEmptyStateHtml() {
-  return `
-      <div class="warning-container">
-        <img class='warning-icon' src="/assets/images/movie-icon.png" alt="movie icon">
-        <p class='warning-content'>Unable to find what you're looking for. Please try another search.</p>
-      </div>
-    `;
+function getEmptyStateHtml(pageType) {
+  const messageContainer = document.getElementById('message-container');
+
+  messageContainer.querySelector('.message-content').textContent = EMPTY_STATE_TEXT[pageType];
 }
 
 function createMovieCard(movie) {

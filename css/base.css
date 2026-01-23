@@ -175,15 +175,17 @@ main {
   flex-direction: column;
 }
 
-.warning-container {
+.message-container {
   align-self: center;
   margin: auto 0;
   text-align: center;
   color: var(--warning-text);
+  font-size: var(--fs-m);
+  font-weight: 700;
 }
 
-.warning-icon {
-  width: 50px;
+.movie-icon {
+  width: 80px;
 }
 
 .movie-container {
