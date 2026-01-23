@@ -1,6 +1,7 @@
 import { CONFIG } from '/config/main-config.js';
 
 const STORAGE_MOVIES_KEY = 'movies';
+const STORAGE_ARTICLE_KEY = 'article';
 
 // ----- LOCAL STORAGE FUNCTIONS -----
 export function loadMovies() {
@@ -14,6 +15,19 @@ export function loadMovies() {
 
 export function saveMovies(movies) {
   localStorage.setItem(STORAGE_MOVIES_KEY, JSON.stringify(movies));
+}
+
+export function loadMovieArticle() {
+  try {
+    const data = localStorage.getItem(STORAGE_ARTICLE_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch (error) {
+    console.error('Error when loading article data:', error.message);
+  }
+}
+
+export function saveMovieArticle(movie) {
+  localStorage.setItem(STORAGE_ARTICLE_KEY, JSON.stringify(movie));
 }
 
 export function clearMovies() {

@@ -1,4 +1,4 @@
-import { getMovieById, loadMovies } from '../services/moviesService.js';
+import { getMovieById, loadMovieArticle, loadMovies, saveMovieArticle } from '../services/moviesService.js';
 import { createGenresHtml, createWatchlistButton } from '../components/movieCard.js';
 import { truncateTextToggle } from '../pipes/truncatePipe.js';
 import { handleReadMoreClick } from '../handlers/readmoreClick.js';
@@ -20,12 +20,11 @@ function handleGlobalClick(e) {
   }
 }
 
-function handleToggleMovieInWatchlist(e) {
+async function handleToggleMovieInWatchlist(e) {
   const movieContainer = e.target.closest('.movie-container');
   const movieId = movieContainer.dataset.movieId;
-  const currentMovies = loadMovies();
 
-  const movieData = currentMovies.find((m) => m.imdbID === movieId);
+  const movieData = loadMovieArticle();
 
   if (!movieData) {
     return;
@@ -44,12 +43,13 @@ async function getMovieData() {
   if (!movieId) return;
 
   const movie = await getMovieById(movieId);
+  saveMovieArticle(movie);
 
+  // render
   articleData(movie);
 }
 
 function articleData(movie) {
-  console.log(movie);
   // set movie id in data attribute
   const movieContainer = document.getElementById('movie-container');
   movieContainer.setAttribute('data-movie-id', movie.imdbID);
