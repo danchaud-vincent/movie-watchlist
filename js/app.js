@@ -6,7 +6,7 @@ import {
   getMovieByIdFromStorage,
 } from './services/movies.js';
 import { truncateTextToggle } from './pipes/truncatePipe.js';
-import { toggleMovieInWatchlist, loadWatchlist, clearWatchlist } from './watchlist.js';
+import { toggleMovieInWatchlist, loadWatchlist, clearWatchlist } from './services/watchlist.js';
 import { loadRandomHeroImage } from './services/unsplashAPI.js';
 
 const PAGE_TYPES = {
