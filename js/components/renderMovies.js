@@ -1,5 +1,6 @@
 import { getMessageContainer } from './messageComponent.js';
 import { createMovieCard } from './movieCard.js';
+import { truncateTextToggle } from '../pipes/truncatePipe.js';
 
 export function renderMovies(movies, pageType) {
   const container = document.getElementById('movies');
