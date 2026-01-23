@@ -33,10 +33,8 @@ export function toggleMovieInWatchlist(movieId, movieData) {
     ? watchlist.filter((movieWatchlist) => movieWatchlist.imdbID !== movieId)
     : [...watchlist, movieData];
 
-  console.log(updatedWatchlist);
-
   // save new watchlist
   saveWatchlist(updatedWatchlist);
 
-  return isInWatchlist;
+  return !isInWatchlist;
 }

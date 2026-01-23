@@ -36,8 +36,9 @@ function handleToggleMovieInWatchlist(e) {
     return;
   }
 
-  const isInWatchlist = toggleMovieInWatchlist(movieId, movieData);
+  toggleMovieInWatchlist(movieId, movieData);
+  const updatedWatchlist = loadWatchlist();
 
   // render movies
-  updateMovieWatchlistUI(movieContainer, isInWatchlist);
+  renderMovies(updatedWatchlist, 'watchlist');
 }
