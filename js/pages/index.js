@@ -1,8 +1,12 @@
 import { renderMovies } from '../components/renderMovies.js';
 import { getMoviesWithDetailsBySearch, mergeMoviesWithWatchlist } from '../services/movies.js';
 import { loadWatchlist } from '../watchlist.js';
+import { loadRandomHeroImage } from '../services/unsplashAPI.js';
 
 const searchForm = document.getElementById('form-search-movie');
+
+// set hero background image
+loadRandomHeroImage('hero');
 
 // ------------ EVENT LISTENER ------------
 searchForm.addEventListener('submit', handleMovieSearch);
