@@ -21,9 +21,9 @@ function handleGlobalClick(e) {
 function handleToggleMovieInWatchlist(e) {
   const movieContainer = e.target.closest('.movie-container');
   const movieId = movieContainer.dataset.movieId;
+  const currentMovies = loadMovies();
 
-  const movie = loadMovies().find((m) => m.imdbID === movieId);
-  console.log(movie);
+  const movie = currentMovies.find((m) => m.imdbID === movieId);
 
   if (!movie) {
     return;
@@ -32,11 +32,10 @@ function handleToggleMovieInWatchlist(e) {
   const updatedWatchlist = toggleMovieInWatchlist(movie);
 
   // render the movies updated
-  const movies = loadMovies();
-  const moviesWithWatchlistStatus = mergeMoviesWithWatchlist(movies, updatedWatchlist);
+  const updatedMovies = mergeMoviesWithWatchlist(currentMovies, updatedWatchlist);
 
   // render movies
-  renderMovies(moviesWithWatchlistStatus, 'index');
+  renderMovies(updatedMovies, 'index');
 }
 
 async function handleMovieSearch(e) {
