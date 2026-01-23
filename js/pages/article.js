@@ -49,6 +49,7 @@ async function getMovieData() {
 }
 
 function articleData(movie) {
+  console.log(movie);
   // set movie id in data attribute
   const movieContainer = document.getElementById('movie-container');
   movieContainer.setAttribute('data-movie-id', movie.imdbID);
@@ -72,4 +73,14 @@ function articleData(movie) {
   const watchlist = loadWatchlist();
   const isSubscribed = watchlist.some((m) => m.imdbID === movie.imdbID);
   document.getElementById('movie-watchlist').innerHTML = createWatchlistButton(isSubscribed);
+
+  // set actors
+  document.getElementById('movie-actors').innerHTML = renderActors(movie.Actors);
+}
+
+function renderActors(actors) {
+  return actors
+    .split(',')
+    .map((actor) => `<p class="actor">${actor}</p>`)
+    .join('');
 }

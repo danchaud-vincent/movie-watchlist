@@ -1,3 +1,40 @@
 .movie-article {
   min-height: var(--height-main);
 }
+
+.container {
+  width: 100%;
+  padding: 2em 0;
+
+  border-bottom: var(--border-size) solid var(--border);
+}
+
+.links-section {
+  display: flex;
+  justify-content: start;
+  gap: 1em;
+}
+
+.link-section {
+  text-decoration: none;
+  background-color: var(--bg-light);
+  border-radius: 25px;
+  padding: 1em 3em;
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.actors-container {
+  display: flex;
+  justify-content: space-evenly;
+
+  padding: 1em 0;
+}
+
+.actor {
+  padding: 0.5em;
+  color: var(--text);
+  font-weight: 400;
+  font-size: var(--fs-s);
+  border: 1px solid var(--bg-light);
+}
