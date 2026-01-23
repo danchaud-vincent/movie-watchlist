@@ -41,9 +41,6 @@ function handleToggleMovieInWatchlist(e) {
 async function handleMovieSearch(e) {
   e.preventDefault();
 
-  // clear movies storage
-  // clearMovies();
-
   // get the movie name
   const movie = e.target.search.value.trim();
 
