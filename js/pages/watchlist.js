@@ -2,6 +2,7 @@ import { loadRandomHeroImage } from '../services/unsplashService.js';
 import { renderMovies } from '../components/renderMovies.js';
 import { loadWatchlist, toggleMovieInWatchlist } from '../services/watchlistService.js';
 import { handleReadMoreClick } from '../handlers/readmoreClick.js';
+import { updateMovieWatchlistUI } from '../components/updateMovieWatchlist.js';
 
 // set hero background image
 loadRandomHeroImage('hero');
@@ -29,14 +30,14 @@ function handleToggleMovieInWatchlist(e) {
 
   const currentWatchlist = loadWatchlist();
 
-  const movie = currentWatchlist.find((m) => m.imdbID === movieId);
+  const movieData = currentWatchlist.find((m) => m.imdbID === movieId);
 
-  if (!movie) {
+  if (!movieData) {
     return;
   }
 
-  const updatedWatchlist = toggleMovieInWatchlist(movie);
+  const isInWatchlist = toggleMovieInWatchlist(movieId, movieData);
 
   // render movies
-  renderMovies(updatedWatchlist, 'watchlist');
+  updateMovieWatchlistUI(movieContainer, isInWatchlist);
 }

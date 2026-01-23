@@ -24,17 +24,19 @@ export function clearWatchlist() {
   saveWatchlist([]);
 }
 
-export function toggleMovieInWatchlist(movie) {
+export function toggleMovieInWatchlist(movieId, movieData) {
   const watchlist = loadWatchlist();
 
-  const isInWatchlist = watchlist.some((movieInWatchlist) => movieInWatchlist.imdbID === movie.imdbID);
+  const isInWatchlist = watchlist.some((movieInWatchlist) => movieInWatchlist.imdbID === movieId);
 
   const updatedWatchlist = isInWatchlist
-    ? watchlist.filter((movieWatchlist) => movieWatchlist.imdbID !== movie.imdbID)
-    : [...watchlist, movie];
+    ? watchlist.filter((movieWatchlist) => movieWatchlist.imdbID !== movieId)
+    : [...watchlist, movieData];
+
+  console.log(updatedWatchlist);
 
   // save new watchlist
   saveWatchlist(updatedWatchlist);
 
-  return updatedWatchlist;
+  return isInWatchlist;
 }

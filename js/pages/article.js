@@ -2,6 +2,7 @@ import { getMovieById } from '../services/moviesService.js';
 import { createGenresHtml, createWatchlistButton } from '../components/movieCard.js';
 import { truncateTextToggle } from '../pipes/truncatePipe.js';
 import { handleReadMoreClick } from '../handlers/readmoreClick.js';
+import { toggleMovieInWatchlist, loadWatchlist } from '../services/watchlistService.js';
 
 getMovieData();
 
@@ -42,4 +43,19 @@ function articleData(movie) {
   moviePlot.textContent = movie.Plot;
   moviePlot.setAttribute('data-fulltext', movie.Plot);
   truncateTextToggle(document.querySelector('.movie-plot'));
+}
+
+function handleToggleMovieInWatchlist(e) {
+  const movieContainer = e.target.closest('.movie-container');
+  const movieId = movieContainer.dataset.movieId;
+
+  const currentWatchlist = loadWatchlist();
+
+  const movie = currentWatchlist.find((m) => m.imdbID === movieId);
+
+  if (!movie) {
+    return;
+  }
+
+  //   const updatedWatchlist = toggleMovieInWatchlist(movie);
 }

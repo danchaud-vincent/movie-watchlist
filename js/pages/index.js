@@ -1,12 +1,19 @@
 import { renderMovies } from '../components/renderMovies.js';
-import { getMoviesWithDetailsBySearch, loadMovies, mergeMoviesWithWatchlist } from '../services/moviesService.js';
-import { loadWatchlist, toggleMovieInWatchlist } from '../services/watchlistService.js';
+import {
+  getMoviesWithDetailsBySearch,
+  loadMovies,
+  mergeMoviesWithWatchlist,
+  clearMovies,
+} from '../services/moviesService.js';
+import { loadWatchlist, toggleMovieInWatchlist, clearWatchlist } from '../services/watchlistService.js';
 import { loadRandomHeroImage } from '../services/unsplashService.js';
 import { handleReadMoreClick } from '../handlers/readmoreClick.js';
+import { updateMovieWatchlistUI } from '../components/updateMovieWatchlist.js';
 
 const searchForm = document.getElementById('form-search-movie');
 
 // set hero background image
+
 loadRandomHeroImage('hero');
 
 // ------------ EVENT LISTENER ------------
@@ -28,19 +35,15 @@ function handleToggleMovieInWatchlist(e) {
   const movieId = movieContainer.dataset.movieId;
   const currentMovies = loadMovies();
 
-  const movie = currentMovies.find((m) => m.imdbID === movieId);
+  const movieData = currentMovies.find((m) => m.imdbID === movieId);
 
-  if (!movie) {
+  if (!movieData) {
     return;
   }
 
-  const updatedWatchlist = toggleMovieInWatchlist(movie);
+  const isInWatchlist = toggleMovieInWatchlist(movieId, movieData);
 
-  // render the movies updated
-  const updatedMovies = mergeMoviesWithWatchlist(currentMovies, updatedWatchlist);
-
-  // render movies
-  renderMovies(updatedMovies, 'index');
+  updateMovieWatchlistUI(movieContainer, isInWatchlist);
 }
 
 async function handleMovieSearch(e) {
