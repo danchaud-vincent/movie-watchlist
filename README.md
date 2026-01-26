@@ -13,6 +13,16 @@ Visit the live site :
 
 - [Movie watchlist](https://danchaud-vincent.github.io/movie-watchlist/)
 
+## Set up
+
+### Change CONFIG
+
+Change the API keys inside the config.js file.
+
+> OMDB_API_KEY: 'Your_Key'
+
+> UNSLPASH_API_KEY: 'Your_Key'
+
 ## Screenshots
 
 ### Desktop
