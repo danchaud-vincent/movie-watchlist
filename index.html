@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- META -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Watchlist</title>
+
+    <!-- FONT AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- GOOGLE FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="/css/base.css" />
+  </head>
+  <body>
+    <header id="hero" class="hero">
+      <div class="hero-content wrapper">
+        <h1>Find your film</h1>
+        <nav class="navbar">
+          <ul>
+            <li><a href="/watchlist.html">My Watchlist</a></li>
+          </ul>
+        </nav>
+      </div>
+      <form id="form-search-movie" class="search-bar wrapper">
+        <input type="text" id="search" name="search" placeholder="Search a movie with OMDB" />
+        <button>Search</button>
+      </form>
+    </header>
+    <main>
+      <div id="movies" class="movies-container wrapper">
+        <div id="message-container" class="message-container">
+          <img class="movie-icon" src="/assets/images/movie-icon.png" alt="movie icon" />
+          <p class="message-content">Start exploring</p>
+        </div>
+      </div>
+    </main>
+    <script src="/js/pages/index.js" type="module"></script>
+  </body>
+</html>
