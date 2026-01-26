@@ -1,4 +1,4 @@
-import { CONFIG } from '/config/main-config.js';
+import { CONFIG } from '../../config/config';
 
 const STORAGE_MOVIES_KEY = 'movies';
 const STORAGE_ARTICLE_KEY = 'article';
