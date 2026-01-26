@@ -1,4 +1,4 @@
-import { CONFIG } from '../../config/config';
+import { CONFIG } from '../../config/config.js';
 
 export async function loadRandomHeroImage(elementId, fallbackImageURL = '/assets/images/movies-poster.jpg') {
   const randomImageURL = await fetchRandomBackgroundImage('movie');
