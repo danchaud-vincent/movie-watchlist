@@ -7,11 +7,11 @@ Build a small application to find a movie or a serie to watch. The user is able 
 This application uses the following document :
 
 - [OMDb API](https://www.omdbapi.com/)
-- [Figma design]()
+- [Figma design](https://www.figma.com/design/jhFRdFIdHpRxsDznNXtpXw/Movie-Watchlist?node-id=39-13&t=M9MNpb7HRuwizMMe-0)
 
 Visit the live site :
 
-- [Movie watchlist](https://www.figma.com/design/jhFRdFIdHpRxsDznNXtpXw/Movie-Watchlist?node-id=39-13&t=M9MNpb7HRuwizMMe-0)
+- [Movie watchlist](https://danchaud-vincent.github.io/movie-watchlist/)
 
 ## Screenshots
 
