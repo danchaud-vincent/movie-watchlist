@@ -144,7 +144,7 @@ p {
   flex: 1 1 100%;
   padding-left: 40px;
 
-  background-image: url('/assets/images/search-icon.png');
+  background-image: url('../assets/images/search-icon.png');
   background-repeat: no-repeat;
   background-position: top 50% left 10px;
   background-color: var(--bg-input);
